@@ -1,0 +1,36 @@
+    name: Deploy to GitHub Pages
+
+    on:
+      push:
+        branches:
+          - master # Or your main branch name
+
+    jobs:
+      build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Set up Node.js
+            uses: actions/setup-node@v3
+            with:
+              node-version: '22' # Or your desired Node.js version
+
+          - name: Install dependencies
+            run: npm install # Or yarn install / pnpm install
+
+          - name: Build project
+            run: npm run build # Or yarn build / pnpm build
+
+          - name: Deploy to GitHub Pages
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+              github_token: ${{ secrets.amalthambisec }}
+              publish_dir: ./dist # Or your build output directory
+ 
+          - name: Display GitHub Pages URL
+            if: always()
+            run: |
+              echo "GitHub Pages URL: https://${{ github.repository_owner }}.github.io/webappp4amal"
